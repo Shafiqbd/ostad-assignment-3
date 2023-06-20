@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation Example</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+    <h4>Question-9</h4>
+  <form id="myForm">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+      <span id="nameError" class="error"></span>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <span id="emailError" class="error"></span>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span id="passwordError" class="error"></span>
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+      <span id="confirmPasswordError" class="error"></span>
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Clear any previous error messages
+      clearErrors();
+
+      // Get form values
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Validate form fields
+      var isValid = true;
+
+      // Validate name
+      if (!name || !/^[a-zA-Z]+$/.test(name)) {
+        displayError('nameError', 'Name should not be empty and should contain only letters.');
+        isValid = false;
+      }
+
+      // Validate email
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        displayError('emailError', 'Please enter a valid email address.');
+        isValid = false;
+      }
+
+      // Validate password
+      if (!password || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password)) {
+        displayError('passwordError', 'Password should have a minimum length of 8 characters, at least one uppercase letter, one lowercase letter, and one digit.');
+        isValid = false;
+      }
+
+      // Validate confirm password
+      if (password !== confirmPassword) {
+        displayError('confirmPasswordError', 'Confirm password should match the password.');
+        isValid = false;
+      }
+
+      // Submit the form if all fields are valid
+      if (isValid) {
+        // You can perform any additional actions here, such as sending data to a server
+        alert('Form submitted successfully!');
+      }
+    });
+
+    function displayError(elementId, errorMessage) {
+      var errorElement = document.getElementById(elementId);
+      errorElement.textContent = errorMessage;
+    }
+
+    function clearErrors() {
+      var errorElements = document.getElementsByClassName('error');
+      for (var i = 0; i < errorElements.length; i++) {
+        errorElements[i].textContent = '';
+      }
+    }
+  </script>
+</body>
+</html>
